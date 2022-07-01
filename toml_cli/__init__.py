@@ -4,6 +4,7 @@ from typing import Optional, List
 import tomlkit
 import tomlkit.exceptions
 import typer
+import json
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -19,7 +20,7 @@ def get(
     for key_part in key:
         toml_part = toml_part[key_part]
 
-    typer.echo(toml_part)
+    typer.echo(json.dumps(toml_part))
 
 
 @app.command("set")
