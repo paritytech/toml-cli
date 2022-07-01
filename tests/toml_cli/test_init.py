@@ -26,15 +26,15 @@ name = "University"
     assert result.exit_code == 0
     assert "{'name': 'MyName', 'age': 12, 'education': {'name': 'University'}}" in result.stdout
 
-    result = runner.invoke(app, ["get", "--toml-path", str(test_toml_path), "person.education"])
+    result = runner.invoke(app, ["get", "--toml-path", str(test_toml_path), "person", "education"])
     assert result.exit_code == 0
     assert "{'name': 'University'}" in result.stdout
 
-    result = runner.invoke(app, ["get", "--toml-path", str(test_toml_path), "person.education.name"])
+    result = runner.invoke(app, ["get", "--toml-path", str(test_toml_path), "person", "education", "name"])
     assert result.exit_code == 0
     assert "University" in result.stdout
 
-    result = runner.invoke(app, ["get", "--toml-path", str(test_toml_path), "person.age"])
+    result = runner.invoke(app, ["get", "--toml-path", str(test_toml_path), "person", "age"])
     assert result.exit_code == 0
     assert "12" in result.stdout
 
@@ -109,12 +109,12 @@ name = "University"
 """
     )
 
-    result = runner.invoke(app, ["unset", "--toml-path", str(test_toml_path), "person.education.name"])
+    result = runner.invoke(app, ["unset", "--toml-path", str(test_toml_path), "person", "education", "name"])
     assert result.exit_code == 0
     assert "[person.education]" in test_toml_path.read_text()
     assert "University" not in test_toml_path.read_text()
 
-    result = runner.invoke(app, ["unset", "--toml-path", str(test_toml_path), "person.education"])
+    result = runner.invoke(app, ["unset", "--toml-path", str(test_toml_path), "person", "education"])
     assert result.exit_code == 0
     assert "[persion.education]" not in test_toml_path.read_text()
 
