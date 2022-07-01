@@ -87,5 +87,8 @@ def unset(
     toml_path.write_text(tomlkit.dumps(toml_file))
 
 
-if __name__ == "__main__":
+def main():
     app()
+
+if __name__ == "__main__":
+    main()
