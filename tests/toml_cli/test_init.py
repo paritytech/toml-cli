@@ -82,23 +82,23 @@ name = "University"
 """
     )
 
-    result = runner.invoke(app, ["set", "--toml-path", str(test_toml_path), "person.age", "15"])
+    result = runner.invoke(app, ["set", "--toml-path", str(test_toml_path), "15", "person", "age"])
     assert result.exit_code == 0
     assert 'age = "15"' in test_toml_path.read_text()
 
-    result = runner.invoke(app, ["set", "--toml-path", str(test_toml_path), "person.age", "15", "--to-int"])
+    result = runner.invoke(app, ["set", "--toml-path", str(test_toml_path), "--to-int", "15", "person", "age"])
     assert result.exit_code == 0
     assert "age = 15" in test_toml_path.read_text()
 
-    result = runner.invoke(app, ["set", "--toml-path", str(test_toml_path), "person.gender", "male"])
+    result = runner.invoke(app, ["set", "--toml-path", str(test_toml_path), "male", "person", "gender"])
     assert result.exit_code == 0
     assert 'age = 15\ngender = "male"' in test_toml_path.read_text()
 
-    result = runner.invoke(app, ["set", "--toml-path", str(test_toml_path), "person.age", "15", "--to-float"])
+    result = runner.invoke(app, ["set", "--toml-path", str(test_toml_path), "--to-float", "15", "person", "age"])
     assert result.exit_code == 0
     assert "age = 15.0" in test_toml_path.read_text()
 
-    result = runner.invoke(app, ["set", "--toml-path", str(test_toml_path), "person.happy", "True", "--to-bool"])
+    result = runner.invoke(app, ["set", "--toml-path", str(test_toml_path), "--to-bool", "True", "person", "happy"])
     assert result.exit_code == 0
     assert "happy = true" in test_toml_path.read_text()
 
