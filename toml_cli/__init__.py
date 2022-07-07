@@ -57,6 +57,28 @@ def set_(
     toml_path.write_text(tomlkit.dumps(toml_file))
 
 
+@app.command("set_many")
+def set_many(
+    value: str,
+    toml_path: pathlib.Path = typer.Option(pathlib.Path("config.toml")),
+):
+    """Set many values based on a JSON payload"""
+    toml_file = tomlkit.parse(toml_path.read_text())
+
+    items = json.loads(value)
+    for item in items:
+        key = item[0]
+        value = item[1]
+
+        toml_part = toml_file
+        for key_part in key[:-1]:
+            toml_part = toml_part[key_part]
+
+        toml_part[key[-1]] = value
+
+    toml_path.write_text(tomlkit.dumps(toml_file))
+
+
 @app.command("add_section")
 def add_section(
     key: str, toml_path: pathlib.Path = typer.Option(pathlib.Path("config.toml")),
