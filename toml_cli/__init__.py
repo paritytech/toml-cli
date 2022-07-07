@@ -61,11 +61,16 @@ def set_(
 def set_many(
     value: str,
     toml_path: pathlib.Path = typer.Option(pathlib.Path("config.toml")),
+    value_from_file: bool = typer.Option(False),
 ):
     """Set many values based on a JSON payload"""
-    toml_file = tomlkit.parse(toml_path.read_text())
+    if value_from_file:
+        with open(value, 'r') as file:
+            value = file.read()
 
     items = json.loads(value)
+
+    toml_file = tomlkit.parse(toml_path.read_text())
     for item in items:
         key = item[0]
         value = item[1]
